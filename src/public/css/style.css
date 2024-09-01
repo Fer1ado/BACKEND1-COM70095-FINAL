@@ -1,0 +1,33 @@
+.botonera{
+    display: flex;
+    flex-direction: row;
+    padding: 3rem;
+}
+
+.table{
+   max-width: 90%;
+}
+
+button{
+    padding: auto;   
+}
+
+.marco{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.numeracion{
+    margin-left: 4rem;
+    margin-right: 4rem;
+    align-items: flex-end;
+}
+
+.navbar{
+    margin: 1rem;
+    margin-bottom: 3rem;
+    border-radius: 15px;
+}
+
