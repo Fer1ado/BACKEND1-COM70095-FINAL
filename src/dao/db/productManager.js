@@ -75,10 +75,9 @@ class ProductDAO {
     }
 
     async addMany() {
-
         try {
             const products = await productModel.insertMany(productMany);
-            return {status: "success", message: "La base de datos ya tendría que estar cargada", products}
+            return {status: "success", message: "La base de datos ya tendría que estar cargada con los siguientes productos", products}
         } catch (err) {
             return {status: 'failed', message: err.message}
         }
