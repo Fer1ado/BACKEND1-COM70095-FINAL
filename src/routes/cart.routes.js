@@ -4,29 +4,34 @@ import { MongoCartManager } from "../Controller/db/cartManager.js";
 const cartRoute = Router();
 
 
-cartRoute.get("/:cid", async(req, res)=>{
+cartRoute.get("/:cid", async(req, res, next)=>{
     const cid = req.params.cid
     const response = await MongoCartManager.getCarrito(cid)
 
-    if(response.status === "success"){
-        res.status(200).send(response)
-      } if(response.status === "failed"){
-        res.status(406).send(response)   
-      } else{res.status(500).send(response)
-      }
+    try {
+        if(response.status === "success"){
+            res.status(200).send(response)
+        } if(response.status === "failed"){
+            res.status(404).send(response)   
+        }} 
+    catch (error) {
+    next(error)
+    }
 })
 
-cartRoute.get("/", async(req, res)=>{
+cartRoute.get("/", async(req, res, next)=>{
     const cid = req.params.cid
     const response = await MongoCartManager.findAll(cid)
     
-    if(response.status === "success"){
-        res.status(200).send(response)
-      } if(response.status === "failed"){
-        res.status(406).send(response)   
-      } else{res.status(500).send(response)
-      }
-
+    try {
+        if(response.status === "success"){
+            res.status(200).send(response)
+        } if(response.status === "failed"){
+            res.status(404).send(response)   
+    }} 
+    catch (error) {
+    next(error)
+    }
 })
 
 cartRoute.post("/",async (req, res) => {
@@ -39,24 +44,25 @@ cartRoute.post("/",async (req, res) => {
 })
 
 
-cartRoute.post("/:cid/product/:pid",async (req, res) => {
+cartRoute.post("/:cid/product/:pid",async (req, res, next) => {
     const pid = req.params.pid;
     const cid = req.params.cid
     const quantity = req.body.quantity;
     const response = await MongoCartManager.addAndUpdateCart(cid,pid, quantity)
 
     try{
-    if(response.status === "success"){
+        if(response.status === "success"){
         res.status(201).send(response)
-    } if(response.status === "failed"){
-        res.status(406).send(response)
-    }} catch(error){
-        res.status(500).send(response)
+        } if(response.status === "failed"){
+        res.status(404).send(response)
+        }} 
+    catch(error){
+    next(error)
     }
 
 })
 
-cartRoute.put("/:cid/product/:pid",async (req, res) => {
+cartRoute.put("/:cid/product/:pid",async (req, res, next) => {
     const pid = req.params.pid;
     const cid = req.params.cid
     const quantity = req.body.quantity;
@@ -66,13 +72,14 @@ cartRoute.put("/:cid/product/:pid",async (req, res) => {
         if(response.status === "success"){
             res.status(201).send(response)
         } if(response.status === "failed"){
-            res.status(406).send(response)
-        }} catch(error){
-            res.status(500).send(response)
-        }
+            res.status(404).send(response)
+        }} 
+    catch(error){
+    next(error)
+    }
 })
 
-cartRoute.delete("/:cid/product/:pid",async (req, res) => {
+cartRoute.delete("/:cid/product/:pid",async (req, res, next) => {
     const pid = req.params.pid;
     const cid = req.params.cid
     const quantity = req.body.quantity;
@@ -82,13 +89,14 @@ cartRoute.delete("/:cid/product/:pid",async (req, res) => {
         if(response.status === "success"){
             res.status(200).send(response)
         } if(response.status === "failed"){
-            res.status(406).send(response)
-        }} catch(error){
-            res.status(500).send(response)
-        }
+            res.status(404).send(response)
+        }} 
+    catch(error){
+    next(error)
+    }
 })
 
-cartRoute.put("/:cid",async (req, res) => {
+cartRoute.put("/:cid",async (req, res, next) => {
     const cid = req.params.cid
     const array = req.body;
     const response = await MongoCartManager.updateCartWithProducts(cid,array)
@@ -97,14 +105,15 @@ cartRoute.put("/:cid",async (req, res) => {
         if(response.status === "success"){
             res.status(200).send(response)
         } if(response.status === "failed"){
-            res.status(406).send(response)
-        }} catch(error){
-            res.status(500).send(response)
-        }
+            res.status(404).send(response)
+        }} 
+    catch(error){
+    next(error)
+    }
 })
 
 
-cartRoute.delete("/:cid", async(req, res)=>{
+cartRoute.delete("/:cid", async(req, res, next)=>{
     const cid = req.params.cid
     response = await MongoCartManager.deleteCart(cid)
     
@@ -112,11 +121,11 @@ cartRoute.delete("/:cid", async(req, res)=>{
         if(response.status === "success"){
             res.status(200).send(response)
         } if(response.status === "failed"){
-            res.status(406).send(response)
-        }} catch(error){
-            res.status(500).send(response)
-        }
-    
+            res.status(404).send(response)
+        }} 
+    catch(error){
+    next(error)
+    }
 })
 
 

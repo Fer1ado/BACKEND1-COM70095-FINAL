@@ -5,7 +5,7 @@ import handlebars from "express-handlebars";
 import path from "path"
 import {Server} from "socket.io"
 import displayRoutes from 'express-routemap';
-
+import { errorHandler } from './middleware/error.lander.middleware.js';
 
 //importación de rutas persistencia archivos locales
 import cartRoute from "./routes/cart.routes.js";
@@ -33,10 +33,10 @@ mongoose.connect(process.env.DB_CNN)
     .catch(() => console.log('Error al conectarse a la base de datos'))
 
 
-// MIDDLEWARE
+// MIDDLEWARES GLOBALES
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
+app.use(errorHandler)
 
 // RUTAS ESTATICAS PARA VIEWS
 app.use("/static", express.static(_dirname + "/public"))
