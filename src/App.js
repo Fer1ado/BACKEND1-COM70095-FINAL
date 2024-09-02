@@ -11,7 +11,7 @@ import displayRoutes from 'express-routemap';
 import cartRoute from "./routes/cart.routes.js";
 import prodRoute from "./routes/products.routes.js";
 import viewsRoute from "./routes/views.routes.js";
-import ProductManager from "./dao/filesystem/productManager.js";
+
 
 
 //importacion rutas de persistencia MongogoDB
@@ -97,4 +97,3 @@ app.use("/api/cart", cartRoute)
 app.use("/", viewsRoute);
 
 
-const manager = new ProductManager()

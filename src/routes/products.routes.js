@@ -1,4 +1,3 @@
-import ProductManager from "../dao/filesystem/productManager.js";
 import { MongoProductManager } from "../dao/db/productManager.js";
 import { Router } from "express";
 import { productModel } from "../dao/models/product.model.js";
