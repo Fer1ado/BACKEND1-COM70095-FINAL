@@ -15,7 +15,7 @@ import viewsRoute from "./routes/views.routes.js";
 
 
 //importacion rutas de persistencia MongogoDB
-import { MongoProductManager } from './dao/db/productManager.js';
+import { MongoProductManager } from './Controller/db/productManager.js';
 ;
 
 

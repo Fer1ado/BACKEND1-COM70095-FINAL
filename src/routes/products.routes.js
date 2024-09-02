@@ -1,6 +1,6 @@
-import { MongoProductManager } from "../dao/db/productManager.js";
+import { MongoProductManager } from "../Controller/db/productManager.js";
 import { Router } from "express";
-import { productModel } from "../dao/models/product.model.js";
+import { productModel } from "../Controller/models/product.model.js";
 
 const prodRoute = Router();
 

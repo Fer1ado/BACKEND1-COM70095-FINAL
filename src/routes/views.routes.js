@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MongoCartManager } from "../dao/db/cartManager.js"
-import {productModel} from "../dao/models/product.model.js"
-import { cartModel } from "../dao/models/cart.model.js";
+import { MongoCartManager } from "../Controller/db/cartManager.js"
+import {productModel} from "../Controller/models/product.model.js"
+import { cartModel } from "../Controller/models/cart.model.js";
 
 
 const viewsRoute = Router()
