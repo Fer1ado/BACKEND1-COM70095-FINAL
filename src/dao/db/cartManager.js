@@ -34,7 +34,7 @@ class CartDAO {
     }
 
     async addAndUpdateCart(cid, prodId, quantity) {
-       
+
         try{
         const cart = await cartModel.findById(cid)
         const product = await productModel.findById(prodId)
@@ -73,18 +73,17 @@ class CartDAO {
         try {
         if (!cart) {
             return{status:"failed", message: "CARRITO NO ENCONTRADO"};
-        }
-    
+        }    
         // Para cada producto en el array de entrada
         for (let prod of productsArray) {
             // Verifica si el producto existe
             const exists = await productModel.findById(prod.product);
+            // Verifica si el producto ya existe en el carrito
+            const index = cart[0].products.findIndex(cartProduct => cartProduct.product.toString() === prod.product);
+
             if (!exists || exists.status === false) {
                 return{status: "failed", message: `NO SE PUEDE AÑADIR ID INEXISTENTE: ${prod.id_prod} AL CARRITO`}
             }
-            // Verifica si el producto ya existe en el carrito
-            const index = cart[0].products.findIndex(cartProduct => cartProduct.product.toString() === prod.product);
-    
             if (index !== -1) {
             // Si ya existe, actualizamos la cantidad
                 cart.products[index].quantity = prod.quantity + cart.products[index].quantity;
@@ -96,12 +95,12 @@ class CartDAO {
         }
         
         const cart2 = await cartModel.find({_id : cid}).populate("products.product",{title: 1, price: 1,stock:1, code: 1})
+
         return {status:"success", message:"CARRITO ACTUALIZADO CON EXITO", cart2}
 
         } catch (error) {
             return{status: "failed", message: error.message}
         }
-        
     }
 
     async deleteProductById(cid, prodId) {
