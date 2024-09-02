@@ -121,19 +121,19 @@ class ProductDAO {
         let error = ""
         let chequeo = false
                 const prop = () => {for ( let info in updateData) {
-                console.log(info)
-                if (origkeys.includes(info)){
-                    console.log(`${info} esta incluido`)
-                    chequeo = true
-                } else {
-                    console.log(`${item} no esta incluido`)
-                    chequeo = false
-                    error = info
-                    return
+                        //console.log(info)
+                        if (origkeys.includes(info)){
+                            //console.log(`${info} esta incluido`)
+                            chequeo = true
+                        } else {
+                            //console.log(`${item} no esta incluido`)
+                            chequeo = false
+                            error = info
+                            return
+                        }
+                    }
                 }
-            }
-        }
-        prop()
+                prop()
     
 
 
