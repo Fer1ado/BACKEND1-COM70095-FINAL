@@ -28,40 +28,38 @@ class ProductDAO {
             return {status: "failed", message: "El sort debe 0 o 1"}
         } if (!valida4){
             return {status: "failed", message: "El filtro debe ser una expresión regular true or false"}
-        }
-
-        else {
-                try {
-                    const {
-                        docs,
-                        totalDocs,
-                        totalPages,
-                        hasPrevPage,
-                        hasNextPage,
-                        nextPage,
-                        prevPage,
-                    } = await productModel.paginate({status: filter}, {limit, page: page, sort})
-                
+        } 
+            else {
+                    try {
+                        const {
+                            docs,
+                            totalDocs,
+                            totalPages,
+                            hasPrevPage,
+                            hasNextPage,
+                            nextPage,
+                            prevPage,
+                        } = await productModel.paginate({status: filter}, {limit, page: page, sort})
                     
-                
-                    return {
-                        status: 'success',
-                        mensaje: 'Busqueda exitosa',
-                        Payload: docs,
-                        totalPages: totalDocs,
-                        nextPage: nextPage,
-                        prevPage: prevPage,
-                        page: page,
-                        totalPages: totalPages,
-                        hasPrevPage: hasPrevPage,
-                        hasNextPage: hasNextPage,
-                    }
-        
+                        
                     
-            }  catch (error) {
-                return {status: "failed", message:error.message}
+                        return {
+                            status: 'success',
+                            mensaje: 'Busqueda exitosa',
+                            Payload: docs,
+                            totalPages: totalDocs,
+                            nextPage: nextPage,
+                            prevPage: prevPage,
+                            page: page,
+                            totalPages: totalPages,
+                            hasPrevPage: hasPrevPage,
+                            hasNextPage: hasNextPage,
+                        }
+                }  
+                catch (error) {
+                    return {status: "failed", message:error.message}
+                }
             }
-        }
     }
 
     async getProductById(id) {
