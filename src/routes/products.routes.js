@@ -14,62 +14,62 @@ prodRoute.get("/:pid", async (req, res) => {
 // Busqueda de Products con paginate y filtro
 prodRoute.get("/", async (req,res)=>{
   const { limit = 3 , page = 1, filter = true, sort = "1" } = req.query;
-  //return res.send(await MongoProductManager.getProducts(limit,page,category,sort))
+  const response = await MongoProductManager.getProducts(limit,page,filter,sort)
 
-  console.log(limit)
-
-  try {
-    const {
-      docs,
-      totalDocs,
-      totalPages,
-      hasPrevPage,
-      hasNextPage,
-      nextPage,
-      prevPage,
-    } = await productModel.paginate({status: filter}, {limit, page: page, sort})
-
-    
-
-    return res.json({
-      Status: 'success',
-      mensaje: 'Busqueda exitosa',
-      Payload: docs,
-      totalPages: totalDocs,
-      nextPage: nextPage,
-      prevPage: prevPage,
-      page: page,
-      totalPages: totalPages,
-      hasPrevPage: hasPrevPage,
-      hasNextPage: hasNextPage,
-     
-    })
-
-  }  catch (error) {
-    return res.json({message: "failed", message:error.message})
+  try{
+        if(response.status === "success"){
+          res.status(200).send(response)
+        } if(response.status === "failed"){
+          res.status(406).send(response)   
+        } 
+  } catch(error){
+        res.status(500).send(error)
   }
 })
 
 
 //Subida de productos
 prodRoute.post("/", async (req, res) => {
-  res.send(await MongoProductManager.addProduct(req.body))   
+  const response = await MongoProductManager.addProduct(req.body)
+
+    if(response.status === "success"){
+      res.status(201).send(response)
+    } if(response.status === "failed"){
+      res.status(406).send(response)   
+    } else{res.status(500).send(response)
+    }
 });
 
 prodRoute.post("/many", async (req, res) => {
-  res.send(await MongoProductManager.addMany(req.body))   
+  const response = await MongoProductManager.addMany(req.body)
+  res.status(200).send(response)   
 });
 
 //editado de producto
 prodRoute.put("/:id", async (req, res) => {
   const { id } = req.params;
-  res.send(await MongoProductManager.updateProduct(id, req.body))
+  const response = await MongoProductManager.updateProduct(id, req.body)
+
+  if(response.status === "success"){
+    res.status(201).send(response)
+  } if(response.status === "failed"){
+    res.status(406).send(response)   
+  } else{res.status(500).send(response)
+  }
+
 });
 
 //borrado de producto
 prodRoute.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  res.send(await MongoProductManager.deleteProduct(id))
+  const response = await MongoProductManager.deleteProduct(id)
+  
+  if(response.status === "success"){
+    res.status(200).send(response)
+  } if(response.status === "failed"){
+    res.status(400).send(response)
+  } else {res.status(500).send(response)}
+
 });
 
 export default prodRoute;

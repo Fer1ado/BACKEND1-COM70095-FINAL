@@ -20,7 +20,7 @@
 | POST  |  localhost:8080/api/products/many    |  ruta de inserción masiva de productos a la BD | TESTING POSTMAN |
 | PUT DELETE   |  localhost:8080/api/products/:id    | rutas de modificación y eliminación de products de la BD | TESTING POSTMAN implemente una validación por campos para mantener formato de registro en la DB|
 | GET PUT DELETE |  localhost:8080/api/cart/:cid   | rutas de busqueda, edicion por array de productos y eliminación de carrito en la BD | Edición por array tiene que ser con el siguiente formato [{product: id, quantity: Intg},{},{}... todos los prods TESTING POSTMAN |]
-| GET POST |  /api/cart   | ruta de busqueda y creación de carritos | TESTING POSTMAN |
+| GET POST |  /api/cart   | ruta de busqueda y creación de carritos | TESTING POSTMAN la busqueda de carrito con cart ID viene con populate de productos |
 | POST PUT DELETE  |  localhost:8080/api/cart/:cid/product/:pid   |  rutas de busqueda edicion y creación de productos dentro de carrito especifico en la BD | TESTING POSTMAN |
 | GET |  localhost:8080/home     | ruta view de home Handlebars | TESTING HANDLEBARS |
 | GET |  localhost:8080/products  | ruta view de products con mongoose-paginate y sorting por precio y stock| TESTING HANDLEBARS |

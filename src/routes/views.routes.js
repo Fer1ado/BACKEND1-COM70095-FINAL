@@ -75,7 +75,7 @@ viewsRoute.get("/realtimeproducts", (req, res) => {
       
 
     } catch (error) {
-      return res.json({status: "failed", error: error.message})
+      return res.status(400).json({status: "failed", error: error.message})
     }
   });
 
@@ -108,7 +108,7 @@ viewsRoute.get("/realtimeproducts", (req, res) => {
       })
       
     } catch (error) {
-      return res.json({status: "failed", error: error.message})
+      return res.status(400).json({status: "failed", error: error.message})
     }
   })
 
@@ -131,7 +131,7 @@ viewsRoute.get("/realtimeproducts", (req, res) => {
           }
       })
 
-      console.log(`Item que se esta eliminando ${cartDel}`)
+      //console.log(`Item que se esta eliminando ${cartDel}`)
 
       res.render("cart", {
         cart: cid,
@@ -140,7 +140,7 @@ viewsRoute.get("/realtimeproducts", (req, res) => {
       })
       
     } catch (error) {
-      return res.json({status: "failed", error: error.message})
+      return res.status(400).json({status: "failed", error: error.message})
     }
   })
 
@@ -170,7 +170,7 @@ viewsRoute.get("/realtimeproducts", (req, res) => {
       })
 
     } catch(error){
-      return res.json({status: "failed", error: error.message})}
+      return res.status(400).json({status: "failed", error: error.message})}
     }) 
 
 

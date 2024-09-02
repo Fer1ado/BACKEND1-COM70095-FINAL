@@ -4,19 +4,64 @@ import productMany from "../../Json/init-products-data.js"
 class ProductDAO {
 
     constructor() {
-          (this.mockObject = {   
-          "title": "string",
-          "description": "string",
-          "price": 123,
-          "thumbnail": ["string1","string2","string3"],
-          "code": "string",
-          "stock": 123,
-          "status": "boolean"})
-      }
-   
-    async getProducts(limit,page,query,sort) {
+            (this.mockObject = {   
+            "title": "string",
+            "description": "string",
+            "price": 123,
+            "thumbnail": ["string1","string2","string3"],
+            "code": "string",
+            "stock": 123,
+            "status": "boolean"})
+        }
+
+    async getProducts(limit,page,filter,sort) {
+        const valida1 = parseInt(limit) 
+        const valida2 = parseInt(page)
+        const valida3 = parseInt(sort)
+        const valida4 = sort !== "false" || sort !== "true"  
+
+        if (isNaN(valida1)) {
+            return {status: "failed", message: "El limite debe ser un número"}
+        } if (isNaN(valida2)) {
+            return {status: "failed", message: "La página debe ser un número"}
+        } if (valida3 > 1 || isNaN(valida3)) {
+            return {status: "failed", message: "El sort debe 0 o 1"}
+        } if (!valida4){
+            return {status: "failed", message: "El filtro debe ser una expresión regular true or false"}
+        }
+
+        else {
+                try {
+                    const {
+                        docs,
+                        totalDocs,
+                        totalPages,
+                        hasPrevPage,
+                        hasNextPage,
+                        nextPage,
+                        prevPage,
+                    } = await productModel.paginate({status: filter}, {limit, page: page, sort})
+                
+                    
+                
+                    return {
+                        status: 'success',
+                        mensaje: 'Busqueda exitosa',
+                        Payload: docs,
+                        totalPages: totalDocs,
+                        nextPage: nextPage,
+                        prevPage: prevPage,
+                        page: page,
+                        totalPages: totalPages,
+                        hasPrevPage: hasPrevPage,
+                        hasNextPage: hasNextPage,
+                    }
         
-        return await productModel.find().limit(limit);
+                    
+            }  catch (error) {
+                return {status: "failed", message:error.message}
+            }
+        }
     }
 
     async getProductById(id) {
@@ -45,17 +90,12 @@ class ProductDAO {
         const integrity = productData.hasOwnProperty("title")&&("description" in productData)&&("price" in productData)&&("thumbnail" in productData)&&("stock" in productData)&&("code" in productData)&&("status" in productData)
         const prod = await productModel.findOne({ code: productData.code });
         
-        console.log(prod)
+        //console.log(prod)
 
         try{
-           
             if (!integrity){
                 console.log("Información erroena o incompleta")
                 return {status: "failed", message: "INFORMACIÓN ERRONEA O INCOMPLETA: EL POSTEO DEBE TENER EL SIGUIENTE FORMATO", objetoEjemplo: this.mockObject}
-            }
-            if (check) {
-                console.log("Producto Incompleto");
-                return{status: "failed", message: "PRODUCTO INCOMPLETO, FALTAN RELLENAR CAMPOS"}
             }
             if (prod) {
                 console.log("Producto ya agregado");
